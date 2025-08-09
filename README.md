@@ -41,6 +41,11 @@ Planning and reviewing agents are configured to use **Claude Opus 4.1** (`claude
 
 ## Development Workflow Patterns
 
+### 0. Create a new feature branch
+```
+<Create a new feature branch for all new development>
+```
+
 ### 1. Feature Planning & Design
 
 **Turn on Plan Mode:**
@@ -75,6 +80,11 @@ Create the high level plan of the feature I have no users, the product and platf
 ```
 
 ### 4. Code Review & Quality Assurance
+
+**Create a feature review branch off your feature branch**
+```
+This ensures all changes can be review in isolation and can be thrown away if things go sideways
+```
 
 **Comprehensive PR Review:**
 ```
@@ -164,3 +174,4 @@ Follow the `AGENT_TEMPLATE.md` for creating new specialized agents:
 
 ### Workflow Improvements
 Contribute workflow patterns and prompt templates that improve development efficiency and code quality.
+
