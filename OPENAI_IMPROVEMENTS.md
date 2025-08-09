@@ -2,7 +2,7 @@
 
 ## Summary of Enhancements
 
-Based on OpenAI's "Practical Guide to Building Agents," the following improvements have been implemented:
+Based on OpenAI's "Practical Guide to Building Agents," the following improvements have been implemented: https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf
 
 ### 1. **Clearer Action-Oriented Instructions**
 - ✅ Updated agents with numbered, actionable steps
