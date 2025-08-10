@@ -81,14 +81,24 @@ Create the high level plan of the feature I have no users, the product and platf
 
 ### 4. Code Review & Quality Assurance
 
+**Perform QA and bug remediation**
+
+```
+@agent-project-manager we now need to work on QA and bugs.  For all of the remaining prompts until I saw otherwise we will be fixing bugs from the optimization. Use ultrathink and the context of the github issues to investigate and remediate with our agents.
+```
+
 **Create a feature review branch off your feature branch**
-```
 This ensures all changes can be review in isolation and can be thrown away if things go sideways
-```
 
 **Comprehensive PR Review:**
 ```
-@agent-project-manager Coordinate a full code review of this PR. Use @agent-code-reviewer and @agent-github-issue-manager to create and update an issue with all findings, opportunities, and problems. The PR likely has commits with redundant, over-engineered, verbose code that likely needs unification, refactored for re-usability, or cleaned up. Do not delete database tables. Create a systematic plan using ultrathink and sequential thinking to identify key refactoring areas aligned with modern best practices. Use context7 MCP to reference all code documentation. This could be a large PR with many side paths and duplicate workflows, so ensure a thorough and organized review.
+PR Review - after a feature is done and before PR is merged
+@agent-project-manager Coordinate a full code review of this PR. Use @agent-code-reviewer and @agent-github-issue-manager to create and update an issue with all findings, opportunities, and problems. This PR or branch could have redundant, over-engineered, verbose code that likely needs unification, refactored for re-usability, or cleaned up. Do not delete empty database tables, but check to make sure all database migrations are completed. Create a systematic plan using ultrathink and sequential thinking to identify key refactoring areas aligned with modern best practices. Use context7 MCP to reference all code documentation. This PR may have many side paths and duplicate workflows, so ensure a thorough and organized review.
+```
+
+### 5. Organize Commits and Issues
+```
+Commit, create branch, open PR and link all issues. @agent-project-manager @agent-github-issue-manager update all issues with completion status.  Commit all changes, push to branch and open PR and link PR to issues
 ```
 
 ## Key Features
