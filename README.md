@@ -47,14 +47,19 @@ cd ~/.claude
 cp -Rf agents ~/.claude/
 ```
 
-### Copy the .mcp.json into your project
+**Copy the .mcp.json into your project**
 - I would suggest adding it to your .gitignore
-- Create an .envrc file or set these variables in your shell or ~/.zshrc
 ```
-export JIRA_API_TOKEN="<api key>" // admin.atlassian.com/
-export JIRA_URL="https://<jira account>.atlassian.net/"
-export JIRA_EMAIL="<your email>"
+cp -Rf ~/.claude/agents/.mcp.json.example .
 ```
+
+**Install github and jira cli**
+```
+brew install gh
+brew install jira-cli
+```
+
+## WORKFLOW
 
 ### 0. Create a new feature branch
 ```
@@ -62,7 +67,6 @@ export JIRA_EMAIL="<your email>"
 ```
 
 ### 1. Feature Planning & Design
-
 **Turn on Plan Mode:**
 ```
 <Discussion about the feature and the goal with obstacles>
@@ -71,50 +75,49 @@ export JIRA_EMAIL="<your email>"
 ```
 
 **Create High-Level Plan:**
-```
-Create the high level plan of the feature I have no users, the product and platform are in full stealth. You now have access to the code and are the only developer.  Documentation should be documented in ./docs/project/<github-issue-id>. Perform a deep technical analysis to determine what you would need to build and add to implement this feature. Create a detailed plan only, and use @agent-project-manager and @agent-github-issue-manager to document the entire project in GitHub.
-```
+
+> Create the high level plan of the feature I have no users, the product and platform are in full stealth. You now have access to the code and are the only developer.  Documentation should be documented in ./docs/project/<github-issue-id>. Perform a deep technical analysis to determine what you would need to build and add to implement this feature. Create a detailed plan only, and use @agent-project-manager and @agent-github-issue-manager to document the entire project in GitHub.
+
 
 ### 2. Detailed Implementation Planning
 
 **Create Phased Approach:**
-```
-@agent-project-manager Coordinate this plan using <link to github issue> as the strategy source of truth. Use ultrathink and sequential thinking to produce a complete multi phase plan with dependencies, risks, and acceptance criteria, do not over engineer. Claude Code is the sole developer, there are no humans or teams to work with or plan for.  All timing and projects should be based on Claude developing the feature.  Coordinate with agents to explore, analyze, research, and propose actions. Update GitHub issues via @agent-github-issue-manager using the GitHub CLI. We are not in a hurry, take the time needed to design the best solution, do not optimize for simple or to get it done. Do not execute any changes until all planning phases are completed and reviewed. Prioritize quality, clear structure, and maintainability.
-```
+
+> @agent-project-manager Coordinate this plan using <link to github issue> as the strategy source of truth. Use ultrathink and sequential thinking to produce a complete multi phase plan with dependencies, risks, and acceptance criteria, do not over engineer. Claude Code is the sole developer, there are no humans or teams to work with or plan for.  All timing and projects should be based on Claude developing the feature.  Coordinate with agents to explore, analyze, research, and propose actions. Update GitHub issues via @agent-github-issue-manager using the GitHub CLI. We are not in a hurry, take the time needed to design the best solution, do not optimize for simple or to get it done. Do not execute any changes until all planning phases are completed and reviewed. Prioritize quality, clear structure, and maintainability.
+
 
 ### 3. Implementation Execution
 
 **Begin Implementation:**
-```
-@agent-project-manager Begin implementation with the agent team. Ensure each agent uses ultrathink and sequential thinking to perform their tasks. Do not advance to the next phase until the current phase's code is implemented, reviewed, optimized, and verified with code reviews. Update the tracking issue with progress via @agent-github-issue-manager. Enforce PR reviews and checklist sign off before any phase transition.
-```
+
+> @agent-project-manager Begin implementation with the agent team. Ensure each agent uses ultrathink and sequential thinking to perform their tasks. Do not advance to the next phase until the current phase's code is implemented, reviewed, optimized, and verified with code reviews. Update the tracking issue with progress via @agent-github-issue-manager. Enforce PR reviews and checklist sign off before any phase transition.
+
 
 **Continue Each Phase:**
-```
-@agent-project-manager continue with the project and update the github issues with progress. Have the agents continue implementation.
-```
+
+> @agent-project-manager continue with the project and update the github issues with progress. Have the agents continue implementation.
+
 
 ### 4. Code Review & Quality Assurance
 
 **Perform QA and bug remediation**
 
-```
-@agent-project-manager we now need to work on QA and bugs.  For all of the remaining prompts until I saw otherwise we will be fixing bugs from the optimization. Use ultrathink and the context of the github issues to investigate and remediate with our agents.
-```
+> @agent-project-manager we now need to work on QA and bugs.  For all of the remaining prompts until I saw otherwise we will be fixing bugs from the optimization. Use ultrathink and the context of the github issues to investigate and remediate with our agents.
 
 **Create a feature review branch off your feature branch**
 This ensures all changes can be review in isolation and can be thrown away if things go sideways
 
 **Comprehensive PR Review:**
-```
-PR Review - after a feature is done and before PR is merged
-@agent-project-manager Coordinate a full code review of this PR. Use @agent-code-reviewer and @agent-github-issue-manager to create and update an issue with all findings, opportunities, and problems. This PR or branch could have redundant, over-engineered, verbose code that likely needs unification, refactored for re-usability, or cleaned up. Do not delete empty database tables, but check to make sure all database migrations are completed. Create a systematic plan using ultrathink and sequential thinking to identify key refactoring areas aligned with modern best practices. Use context7 MCP to reference all code documentation. This PR may have many side paths and duplicate workflows, so ensure a thorough and organized review.
-```
+- PR Review - after a feature is done and before PR is merged
+
+> @agent-project-manager Coordinate a full code review of this PR. Use @agent-code-reviewer and @agent-github-issue-manager to create and update an issue with all findings, opportunities, and problems. This PR or branch could have redundant, over-engineered, verbose code that likely needs unification, refactored for re-usability, or cleaned up. Do not delete empty database tables, but check to make sure all database migrations are completed. Create a systematic plan using ultrathink and sequential thinking to identify key refactoring areas aligned with modern best practices. Use context7 MCP to reference all code documentation. This PR may have many side paths and duplicate workflows, so ensure a thorough and organized review.
+
 
 ### 5. Organize Commits and Issues
-```
-Commit, create branch, open PR and link all issues. @agent-project-manager @agent-github-issue-manager update all issues with completion status.  Commit all changes, push to branch and open PR and link PR to issues
-```
+- Commit, create branch, open PR and link all issues.
+
+> @agent-project-manager @agent-github-issue-manager update all issues with completion status.  Commit all changes, push to branch and open PR and link PR to issues
+
 
 ## Key Features
 
