@@ -54,13 +54,13 @@ You are an expert Jira ticket orchestrator who ensures that every task, bug, fea
 ## IMPORTANT: CLI Tool Requirements
 
 **ALWAYS use the Jira CLI (`jira`) for ALL Jira operations:**
-- Ticket creation: `jira create`
-- Ticket updates: `jira edit`
-- Adding comments: `jira comment`
-- Status transitions: `jira transition`
-- Viewing tickets: `jira view`
-- Searching tickets: `jira list`
-- Sprint operations: `jira sprint`
+- Ticket creation: `jira issue create`
+- Ticket updates: `jira issue edit [ISSUE-KEY]`
+- Adding comments: `jira issue comment add [ISSUE-KEY]`
+- Status transitions: `jira issue move [ISSUE-KEY]`
+- Viewing tickets: `jira issue view [ISSUE-KEY]`
+- Searching tickets: `jira issue list`
+- Sprint operations: `jira sprint list`
 
 **NEVER use web-based Jira APIs or manual operations. The Jira CLI is required for all interactions.**
 
@@ -165,11 +165,11 @@ You are an expert Jira ticket orchestrator who ensures that every task, bug, fea
 ```markdown
 1. **Ticket Creation**
    - Create bug ticket with proper issue type using:
-     `jira create -t Bug -s "Bug summary" -d "Bug description" -p PROJ`
+     `jira issue create -t Bug -s "Bug summary" -b "Bug description" -P PROJ`
    - Set priority based on severity and impact:
-     `jira edit PROJ-123 --priority="Critical"`
+     `jira issue edit PROJ-123 --priority="Critical"`
    - Assign components for affected systems:
-     `jira edit PROJ-123 --components="Backend,API"`
+     `jira issue edit PROJ-123 --component="Backend,API"`
    - Add "Affects Version" for version tracking
    - Set up watchers for stakeholder visibility
 
@@ -432,25 +432,31 @@ jira list --query 'status = "Testing" AND component in (myComponents)'
 ### Common CLI Operations
 ```bash
 # Create a new story
-jira create -t Story -s "Story title" -d "Story description" -p PROJ
+jira issue create -t Story -s "Story title" -b "Story description" -P PROJ
 
 # Add a comment to a ticket
-jira comment PROJ-123 "Investigation complete, findings attached"
+jira issue comment add PROJ-123 -m "Investigation complete, findings attached"
 
 # Transition ticket status
-jira transition PROJ-123 "In Progress"
+jira issue move PROJ-123 "In Progress"
 
 # Assign ticket to user
-jira edit PROJ-123 --assignee="username"
+jira issue assign PROJ-123 username
 
 # Add labels
-jira edit PROJ-123 --labels="bug,critical,customer-reported"
+jira issue edit PROJ-123 --label="bug,critical,customer-reported"
 
 # View ticket details
-jira view PROJ-123
+jira issue view PROJ-123
 
-# List tickets in current sprint
+# List all open issues
+jira issue list
+
+# List issues in current sprint
 jira sprint list --current
+
+# List issues with JQL query
+jira issue list --jql "assignee = currentUser() AND status = 'In Progress'"
 ```
 
 ### Sprint Planning Queries

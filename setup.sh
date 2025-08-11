@@ -111,11 +111,26 @@ install_cli_tools() {
         print_success "GitHub CLI already installed"
     fi
     
-    # Install Jira CLI
-    if ! command -v jira &> /dev/null; then
-        print_status "Installing Jira CLI..."
+    # Install Jira CLI (ankitpokhrel/jira-cli)
+    # Check if the correct jira CLI is installed
+    if ! command -v jira &> /dev/null || ! jira version 2>/dev/null | grep -q "ankitpokhrel"; then
+        print_status "Installing Jira CLI (ankitpokhrel/jira-cli)..."
+        
+        # Check if npm jira-cli is installed and warn
+        if npm list -g jira-cli &> /dev/null; then
+            print_warning "Found npm jira-cli installed globally. This may conflict with the Homebrew version."
+            print_warning "Consider running: npm uninstall -g jira-cli"
+        fi
+        
         brew install jira-cli
-        print_success "Jira CLI installed"
+        
+        # Check if homebrew jira is in PATH
+        if [[ ":$PATH:" != *":/opt/homebrew/bin:"* ]] && [ -f "/opt/homebrew/bin/jira" ]; then
+            print_warning "Homebrew jira installed but may not be in PATH"
+            print_warning "You may need to add /opt/homebrew/bin to your PATH"
+        fi
+        
+        print_success "Jira CLI (ankitpokhrel/jira-cli) installed"
     else
         print_success "Jira CLI already installed"
     fi
