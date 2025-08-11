@@ -45,7 +45,15 @@ Planning and reviewing agents are configured to use **Claude Opus 4.1** (`claude
 ```
 cd ~/.claude
 cp -Rf agents ~/.claude/
-cp -Rf hooks ~/.claude/
+```
+
+### Copy the .mcp.json into your project
+- I would suggest adding it to your .gitignore
+- Create an .envrc file or set these variables in your shell or ~/.zshrc
+```
+export JIRA_API_TOKEN="<api key>" // admin.atlassian.com/
+export JIRA_URL="https://<jira account>.atlassian.net/"
+export JIRA_USERNAME="<your email>"
 ```
 
 ### 0. Create a new feature branch
