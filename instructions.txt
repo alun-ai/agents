@@ -1,0 +1,140 @@
+AUTOMATED SETUP INSTRUCTIONS FOR CLAUDE CODE AGENTS
+====================================================
+
+Execute the following commands in sequence to set up the Claude Code Agents collection.
+This file is designed to be read and executed by a new Claude instance.
+
+PREREQUISITES
+=============
+- macOS with Homebrew installed
+- Git configured with GitHub access
+- Claude Code installed and running
+- Access to create/modify files in ~/.claude directory
+
+STEP 1: CLONE THE AGENTS REPOSITORY
+====================================
+Execute these commands:
+
+cd ~
+mkdir -p ~/.claude
+cd ~/.claude
+git clone https://github.com/alun-ai/agents.git
+
+STEP 2: INSTALL REQUIRED CLI TOOLS
+===================================
+Execute these commands:
+
+brew install gh
+brew install jira-cli
+
+STEP 3: SETUP GITHUB CLI
+=========================
+Execute this command and follow the prompts:
+
+gh auth login
+
+Choose:
+- GitHub.com
+- HTTPS
+- Login with a web browser or paste an authentication token
+- Complete the authentication
+
+STEP 4: SETUP JIRA CLI (OPTIONAL)
+==================================
+If you need Jira integration, configure jira-cli:
+
+jira init
+
+When prompted, enter:
+- Server URL: https://<your-account>.atlassian.net/
+- Login (email): <your-email>
+- API Token: <your-jira-api-token>
+
+To generate a Jira API token:
+1. Go to https://id.atlassian.com/manage-profile/security/api-tokens
+2. Click "Create API token"
+3. Give it a name and copy the token
+
+STEP 5: COPY MCP CONFIGURATION TO YOUR PROJECT
+===============================================
+When working on a project, execute these commands from the project root:
+
+cp ~/.claude/agents/.mcp.json.example .mcp.json
+echo ".mcp.json" >> .gitignore
+
+STEP 6: CONFIGURE ENVIRONMENT VARIABLES (OPTIONAL)
+===================================================
+Set up your GitHub token if you haven't:
+
+echo 'export GITHUB_TOKEN="<your-github-personal-access-token>"' >> ~/.zshrc
+source ~/.zshrc
+
+For Jira integration (if needed):
+
+echo 'export JIRA_API_TOKEN="<your-jira-api-token>"' >> ~/.zshrc
+echo 'export JIRA_URL="https://<your-account>.atlassian.net/"' >> ~/.zshrc
+echo 'export JIRA_EMAIL="<your-email>"' >> ~/.zshrc
+source ~/.zshrc
+
+STEP 7: VERIFY INSTALLATION
+============================
+Execute these commands to verify the setup:
+
+# Check agents are installed
+ls -la ~/.claude/agents/
+
+# Verify .mcp.json.example exists
+cat ~/.claude/agents/.mcp.json.example
+
+# Verify GitHub CLI is installed and authenticated
+gh auth status
+
+# Verify jira-cli is installed
+which jira
+
+# Verify jira-cli is configured (optional)
+jira list --query "project = TEST" --max-results 1 2>/dev/null && echo "Jira CLI configured" || echo "Jira CLI not configured (optional)"
+
+STEP 8: RESTART CLAUDE CODE
+============================
+After completing the setup, restart Claude Code to ensure MCP servers are loaded:
+
+1. Close Claude Code completely
+2. Reopen Claude Code
+3. The MCP servers should now be available
+
+VERIFICATION CHECKLIST
+======================
+✓ Agents repository cloned to ~/.claude/agents
+✓ GitHub CLI installed and authenticated
+✓ Jira CLI installed and configured (if needed)
+✓ .mcp.json.example available for project use
+✓ Environment variables configured (if needed)
+✓ Claude Code restarted
+
+TROUBLESHOOTING
+===============
+If you encounter issues:
+
+1. Ensure all directories exist:
+   mkdir -p ~/.claude
+
+2. Check GitHub authentication:
+   gh auth status
+
+3. Verify MCP configuration:
+   cat .mcp.json
+
+4. Check Claude Code logs for MCP server errors
+
+USAGE AFTER SETUP
+=================
+Once setup is complete:
+
+1. Copy .mcp.json to your project root
+2. Customize the MCP configuration as needed
+3. Use @agent-name to invoke specialized agents
+4. Follow the workflow patterns in README.md
+
+END OF AUTOMATED SETUP
+======================
