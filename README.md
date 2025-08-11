@@ -53,7 +53,7 @@ cp -Rf agents ~/.claude/
 ```
 export JIRA_API_TOKEN="<api key>" // admin.atlassian.com/
 export JIRA_URL="https://<jira account>.atlassian.net/"
-export JIRA_USERNAME="<your email>"
+export JIRA_EMAIL="<your email>"
 ```
 
 ### 0. Create a new feature branch

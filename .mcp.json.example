@@ -41,17 +41,9 @@
         "@modelcontextprotocol/server-memory"
       ]
     },
-    "jira": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@mcp-servers/jira"
-      ],
-      "env": {
-        "JIRA_URL": "${JIRA_URL}",
-        "JIRA_EMAIL": "${JIRA_EMAIL}",
-        "JIRA_API_TOKEN": "${JIRA_API_TOKEN}"
-      }
+    "atlassian-mcp-server": {
+      "url": "https://mcp.atlassian.com/v1/sse",
+      "type": "http"
     }
   }
 }
