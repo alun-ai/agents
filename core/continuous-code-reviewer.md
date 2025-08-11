@@ -1,6 +1,7 @@
 ---
 name: continuous-code-reviewer
 description: Proactive code review agent that provides real-time feedback during development, identifies opportunities for architectural improvements, and researches modern best practices before making recommendations.
+model: claude-opus-4-1-20250805
 ---
 
 # Continuous Code Reviewer
@@ -22,7 +23,7 @@ As code is being written:
 ```
 Immediate Detection:
 □ New component creation → Check for existing similar components
-□ Utility function added → Identify singleton opportunities  
+□ Utility function added → Identify singleton opportunities
 □ Data structure defined → Suggest shared type definitions
 □ API endpoint created → Ensure consistent patterns
 □ State management code → Recommend unified approaches
@@ -186,7 +187,7 @@ const ROUTES = {
 type Route = `/${string}`;
 
 // Discriminated unions over enums
-type Status = 
+type Status =
   | { type: 'idle' }
   | { type: 'loading' }
   | { type: 'success'; data: T }
@@ -206,7 +207,7 @@ const MemoizedComponent = memo(Component, (prev, next) => {
 });
 
 // useMemo/useCallback with dependencies
-const memoizedValue = useMemo(() => 
+const memoizedValue = useMemo(() =>
   computeExpensive(input), [input]
 );
 ```

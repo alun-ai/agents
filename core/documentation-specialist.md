@@ -1,7 +1,8 @@
 ---
 name: documentation-specialist
 description: Expert technical writer who creates clear, comprehensive documentation for any project. Specializes in README files, API documentation, architecture guides, and user manuals.
-  
+model: claude-opus-4-1-20250805
+
   Examples:
   - <example>
     Context: Project lacks documentation
@@ -27,7 +28,7 @@ description: Expert technical writer who creates clear, comprehensive documentat
     Creates professional README with all standard sections
     </commentary>
   </example>
-  
+
   Delegations:
   - <delegation>
     Trigger: Code analysis needed first

@@ -1,6 +1,7 @@
 ---
 name: typescript-backend-expert
 description: Comprehensive TypeScript backend developer with expertise in Node.js, Express, NestJS, and modern TypeScript patterns. Provides intelligent, project-aware solutions following TypeScript best practices and type safety conventions.
+model: claude-opus-4-1-20250805
 ---
 
 # TypeScript Backend Expert
@@ -289,7 +290,7 @@ export class ProductController {
     @CurrentUser() user: UserPayload
   ): Promise<ApiResponse<ProductResponseDto[]>> {
     const { data, meta } = await this.productService.findMany(query, user);
-    
+
     return {
       data,
       meta: {
@@ -319,7 +320,7 @@ export class ProductController {
     @CurrentUser() user: UserPayload
   ): Promise<ApiResponse<ProductResponseDto>> {
     const product = await this.productService.create(createProductDto, user);
-    
+
     return {
       data: product,
       meta: {
@@ -345,7 +346,7 @@ export class ProductController {
     @Param('id', ParseUUIDPipe) id: string
   ): Promise<ApiResponse<ProductResponseDto>> {
     const product = await this.productService.findById(id);
-    
+
     return {
       data: product,
       meta: {
@@ -372,7 +373,7 @@ export const CurrentUser = createParamDecorator(
   (data: keyof UserPayload | undefined, ctx: ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest<Request>();
     const user = request.user as UserPayload;
-    
+
     return data ? user?.[data] : user;
   },
 );
@@ -381,7 +382,7 @@ export const CurrentUser = createParamDecorator(
 export function IsValidCategory() {
   return function (target: any, propertyName: string) {
     const validCategories = ['electronics', 'books', 'clothing', 'home'];
-    
+
     registerDecorator({
       name: 'isValidCategory',
       target: target.constructor,
@@ -413,7 +414,7 @@ export function RateLimit(requests: number, windowMs: number) {
 export abstract class AppError extends Error {
   abstract readonly statusCode: number;
   abstract readonly isOperational: boolean;
-  
+
   constructor(message: string, public readonly context?: Record<string, any>) {
     super(message);
     Object.setPrototypeOf(this, new.target.prototype);
@@ -424,7 +425,7 @@ export abstract class AppError extends Error {
 export class ValidationError extends AppError {
   readonly statusCode = 400;
   readonly isOperational = true;
-  
+
   constructor(message: string, public readonly field?: string) {
     super(message);
   }
@@ -433,9 +434,9 @@ export class ValidationError extends AppError {
 export class NotFoundError extends AppError {
   readonly statusCode = 404;
   readonly isOperational = true;
-  
+
   constructor(resource: string, identifier?: string) {
-    const message = identifier 
+    const message = identifier
       ? `${resource} with identifier '${identifier}' not found`
       : `${resource} not found`;
     super(message);
@@ -678,9 +679,9 @@ class TypeSafeCacheService {
 
   async set<T>(key: string, value: T, options: CacheOptions = {}): Promise<void> {
     const { ttl = 3600, tags = [] } = options;
-    
+
     await this.redis.setex(key, ttl, JSON.stringify(value));
-    
+
     // Tag management for cache invalidation
     for (const tag of tags) {
       await this.redis.sadd(`tag:${tag}`, key);
@@ -704,17 +705,17 @@ export function Cacheable<T>(options: CacheOptions = {}) {
     descriptor: TypedPropertyDescriptor<(...args: any[]) => Promise<T>>
   ) {
     const method = descriptor.value!;
-    
+
     descriptor.value = async function (...args: any[]): Promise<T> {
       const cacheKey = `${target.constructor.name}:${propertyName}:${JSON.stringify(args)}`;
       const cacheService = this.cacheService as TypeSafeCacheService;
-      
+
       const cached = await cacheService.get<T>(cacheKey);
       if (cached) return cached;
-      
+
       const result = await method.apply(this, args);
       await cacheService.set(cacheKey, result, options);
-      
+
       return result;
     };
   };

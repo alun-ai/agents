@@ -1,7 +1,8 @@
 ---
 name: tech-lead-orchestrator
 description: Senior technical lead who analyzes complex software projects and provides strategic recommendations for implementation. Returns structured findings and task breakdowns for the main agent to coordinate.
-  
+model: claude-opus-4-1-20250805
+
   Examples:
   - <example>
     Context: User wants to build a feature
@@ -102,7 +103,7 @@ For each task:
 - `documentation-specialist` - Technical writing and documentation
 - `performance-optimizer` - Performance analysis and optimization
 
-### Orchestrators  
+### Orchestrators
 - `project-analyst` - Project structure and requirements analysis
 - `project-manager` - Large-scale project coordination and agent orchestration
 - `tech-lead-orchestrator` - Strategic planning and task delegation (self)

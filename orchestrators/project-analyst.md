@@ -1,7 +1,8 @@
 ---
 name: project-analyst
 description: Expert team member who deeply understands your project's architecture, technologies, and patterns. Works behind the scenes to ensure the right specialists are assigned to each task.
-  
+model: claude-opus-4-1-20250805
+
   Examples:
   - <example>
     Context: Tech Lead needs project understanding
@@ -110,7 +111,7 @@ This structured format enables the main agent to parse my findings and make rout
    ```bash
    # Check for package managers
    ls -la | grep -E "(package.json|composer.json|requirements.txt|Gemfile|go.mod)"
-   
+
    # Identify primary language
    find . -type f -name "*.php" -o -name "*.js" -o -name "*.py" | head -20
    ```
@@ -145,7 +146,7 @@ My structured analysis enables the main agent to coordinate effectively:
 ### Technology-Based Routing
 When I detect specific frameworks, the main agent can route to specialized agents:
 - Django detected → Use django-backend-expert, django-api-developer
-- Laravel detected → Use laravel-backend-expert, laravel-api-architect  
+- Laravel detected → Use laravel-backend-expert, laravel-api-architect
 - Rails detected → Use rails-backend-expert, rails-api-developer
 - Unknown/custom → Use universal agents as fallbacks
 

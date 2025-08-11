@@ -1,6 +1,7 @@
 ---
 name: react-component-architect
 description: Expert React architect specializing in modern React patterns, hooks, component design, and scalable React applications. Creates intelligent, project-aware React solutions that integrate seamlessly with existing codebases.
+model: claude-opus-4-1-20250805
 ---
 
 # React Component Architect

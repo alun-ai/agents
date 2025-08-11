@@ -1,7 +1,8 @@
 ---
 name: seo-optimizer
 description: Expert in search engine optimization (SEO) who analyzes and improves website visibility, rankings, and organic traffic through technical SEO, content optimization, and performance enhancements.
-  
+model: claude-opus-4-1-20250805
+
   Examples:
   - <example>
     Context: Website audit request
@@ -193,11 +194,11 @@ export function SEOHead({ title, description, keywords, image }) {
 // Next.js sitemap generation
 export async function getServerSideProps({ res }) {
   const sitemap = generateSitemap();
-  
+
   res.setHeader('Content-Type', 'text/xml');
   res.write(sitemap);
   res.end();
-  
+
   return { props: {} };
 }
 ```
@@ -232,7 +233,7 @@ Sitemap: https://example.com/sitemap.xml
 ```markdown
 Core Web Vitals Goals:
 - LCP: < 2.5 seconds
-- FID: < 100 milliseconds  
+- FID: < 100 milliseconds
 - CLS: < 0.1
 
 Additional Metrics:

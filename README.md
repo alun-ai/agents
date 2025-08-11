@@ -57,21 +57,21 @@ Planning and reviewing agents are configured to use **Claude Opus 4.1** (`claude
 
 **Create High-Level Plan:**
 ```
-Create the high level plan of the feature I have no users, the product and platform are in full stealth. You now have access to the code. Perform a deep technical analysis to determine what you would need to build and add to implement this feature. Create a detailed plan only, and use @agent-project-manager and @agent-github-issue-manager to document the entire project in GitHub.
+Create the high level plan of the feature I have no users, the product and platform are in full stealth. You now have access to the code and are the only developer.  Documentation should be documented in ./docs/project/<github-issue-id>. Perform a deep technical analysis to determine what you would need to build and add to implement this feature. Create a detailed plan only, and use @agent-project-manager and @agent-github-issue-manager to document the entire project in GitHub.
 ```
 
 ### 2. Detailed Implementation Planning
 
 **Create Phased Approach:**
 ```
-@agent-project-manager Coordinate this plan using <link to github issue> as the strategy source of truth. Use ultrathink and sequential thinking to produce a complete multi phase plan with dependencies, risks, and acceptance criteria. Coordinate with agents to explore, analyze, research, and propose actions. Update GitHub issues via @agent-github-issue-manager using the GitHub CLI. We are not in a hurry, take the time needed to design the best solution, do not optimize for simple or get it done. Do not execute any changes until all planning phases are completed and reviewed. Prioritize quality, clear structure, and maintainability.
+@agent-project-manager Coordinate this plan using <link to github issue> as the strategy source of truth. Use ultrathink and sequential thinking to produce a complete multi phase plan with dependencies, risks, and acceptance criteria, do not over engineer. Claude Code is the sole developer, there are no humans or teams to work with or plan for.  All timing and projects should be based on Claude developing the feature.  Coordinate with agents to explore, analyze, research, and propose actions. Update GitHub issues via @agent-github-issue-manager using the GitHub CLI. We are not in a hurry, take the time needed to design the best solution, do not optimize for simple or to get it done. Do not execute any changes until all planning phases are completed and reviewed. Prioritize quality, clear structure, and maintainability.
 ```
 
 ### 3. Implementation Execution
 
 **Begin Implementation:**
 ```
-@agent-project-manager Begin implementation with the team. Ensure each agent uses ultrathink and sequential thinking to perform their tasks. Do not advance to the next phase until the current phase's code is implemented, reviewed, optimized, and verified with code reviews. Update the tracking issue with progress via @agent-github-issue-manager. Enforce PR reviews and checklist sign off before any phase transition.
+@agent-project-manager Begin implementation with the agent team. Ensure each agent uses ultrathink and sequential thinking to perform their tasks. Do not advance to the next phase until the current phase's code is implemented, reviewed, optimized, and verified with code reviews. Update the tracking issue with progress via @agent-github-issue-manager. Enforce PR reviews and checklist sign off before any phase transition.
 ```
 
 **Continue Each Phase:**
