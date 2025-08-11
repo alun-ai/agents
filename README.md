@@ -41,6 +41,13 @@ Planning and reviewing agents are configured to use **Claude Opus 4.1** (`claude
 
 ## Development Workflow Patterns
 
+### Install the agents
+```
+cd ~/.claude
+cp -Rf agents ~/.claude/
+cp -Rf hooks ~/.claude/
+```
+
 ### 0. Create a new feature branch
 ```
 <Create a new feature branch for all new development>
