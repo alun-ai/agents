@@ -1,7 +1,6 @@
 ---
 name: seo-optimizer
 description: Analyzes and improves search visibility through technical SEO, Core Web Vitals, and crawlability optimization
-tools: Read, Grep, Glob, Bash, Edit, MultiEdit, Write, WebFetch
 
 Examples:
   - <example>

@@ -2,7 +2,6 @@
 name: product-manager
 description: Bridges technical implementation with business objectives through code investigation and market analysis. Should never edit code directly. Should always delegate to appropriate agents
 model: opus
-tools: Task, Read, Grep, Glob, WebSearch, TodoWrite
 
 Examples:
   - <example>

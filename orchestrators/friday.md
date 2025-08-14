@@ -2,7 +2,6 @@
 name: friday
 description: Intelligent task router and communication proxy that analyzes requests and delegates to appropriate specialized agents. Acts as the primary interface for all development tasks without managing projects. Do NOT perform any individual task yourself. ALWAYS delegate to the specialized agent.
 model: opus
-tools: Task, TodoWrite, Read, Grep, Glob
 
 Examples:
   - <example>
@@ -268,7 +267,7 @@ Example: Architecture decision
 ```typescript
 function setupIssueTracking(request: string, userPreference: 'github' | 'jira' = 'github') {
   const issueManager = userPreference === 'jira' ? 'jira-manager' : 'github-manager';
-  
+
   // Always create or update issue first
   return {
     manager: issueManager,
@@ -283,7 +282,7 @@ function setupIssueTracking(request: string, userPreference: 'github' | 'jira' =
 function analyzeRequest(request: string) {
   // Setup issue tracking FIRST
   const issueTracking = setupIssueTracking(request);
-  
+
   // Extract key indicators
   const indicators = {
     issue_tracking: issueTracking,
@@ -343,15 +342,15 @@ function selectAgents(indicators: RequestIndicators) {
 function delegateTask(agents: Agent[], task: Task) {
   // Step 1: Create/update issue
   const issue = agents[0].delegate('create_issue', task);
-  
+
   // Step 2: Execute technical work
   const technicalAgents = agents.slice(1, -1);
   const results = [];
-  
+
   for (const agent of technicalAgents) {
     const result = agent.delegate(task, issue.id);
     results.push(result);
-    
+
     // Update issue after each major step
     agents[agents.length - 1].delegate('update_progress', {
       issue: issue.id,
@@ -359,18 +358,19 @@ function delegateTask(agents: Agent[], task: Task) {
       status: result.status
     });
   }
-  
+
   // Step 3: Close or finalize issue
   agents[agents.length - 1].delegate('finalize_issue', {
     issue: issue.id,
     results: results
   });
-  
+
   return { issue, results };
 }
 ```
 
 ## TodoWrite Integration
+> Note: Not all tasks should be different agents.  More often than not in single framework codebases (Typescript/NextJS/Elixir) a single agent will be performing most code creating, editing, updating tasks that fit their assigned role. Code Reviewing is the exception and should ALWAYS be the @code-reviewer or @code-archaeologist
 
 ### Task Tracking Template
 ```typescript

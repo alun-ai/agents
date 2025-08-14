@@ -1,7 +1,6 @@
 ---
 name: database-engineer
 description: Full-stack database expert for PostgreSQL and MySQL - schema design, optimization, migrations, and validation
-tools: Read, Grep, Glob, Bash, Edit, MultiEdit, Write, WebFetch
 
 Examples:
   # Schema Design & Architecture

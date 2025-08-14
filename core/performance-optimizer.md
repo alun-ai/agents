@@ -1,7 +1,6 @@
 ---
 name: performance-optimizer
 description: Identifies and resolves performance bottlenecks through systematic profiling and optimization
-tools: Read, Grep, Glob, Bash, Edit, MultiEdit
 
 Examples:
   - <example>

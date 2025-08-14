@@ -1,7 +1,6 @@
 ---
 name: documentation-specialist
 description: Creates comprehensive technical documentation including READMEs, APIs, and guides
-tools: Read, Grep, Glob, Write, MultiEdit
 
 Examples:
   - <example>

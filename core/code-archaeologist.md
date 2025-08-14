@@ -1,7 +1,6 @@
 ---
 name: code-archaeologist
 description: Analyzes codebases to map architecture, dependencies, and patterns. Should NOT edit code changes directly. Should ALWAYS delegate to appropriate specialized agents.
-tools: Read, Grep, Glob, Bash, LS
 
 Examples:
   - <example>

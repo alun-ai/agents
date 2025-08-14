@@ -1,7 +1,6 @@
 ---
 name: elixir-engineer
 description: Implements Elixir systems using OTP, Phoenix, LiveView, and BEAM patterns
-tools: Read, Grep, Glob, Bash, Edit, MultiEdit, Write, WebFetch
 
 Examples:
   - <example>

@@ -1,7 +1,6 @@
 ---
 name: react-engineer
 description: Full-stack React expert implementing performant components, Next.js applications with SSR/SSG/ISR, hooks, TypeScript, and modern patterns
-tools: Read, Grep, Glob, Bash, Edit, MultiEdit, Write, WebFetch
 
 Examples:
   # Component Performance & Optimization

@@ -1,7 +1,6 @@
 ---
 name: typescript-engineer
 description: Implements Node.js backends using TypeScript, Express, NestJS, with type safety and modern patterns
-tools: Read, Grep, Glob, Bash, Edit, MultiEdit, Write, WebFetch
 
 Examples:
   - <example>

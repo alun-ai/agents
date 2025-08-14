@@ -2,7 +2,6 @@
 name: github-manager
 description: Creates and manages GitHub issues with systematic tracking and agent delegation. Should never edit, review, or recommend code changes directly. Should always delegate to appropriate specialized agents.
 model: opus
-tools: Bash, Read, Grep, Glob, TodoWrite, Task
 
 Examples:
   - <example>

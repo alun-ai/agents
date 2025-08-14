@@ -1,7 +1,6 @@
 ---
 name: python-engineer
 description: Implements Python solutions using Django, FastAPI, Flask, or data science frameworks
-tools: Read, Grep, Glob, Bash, Edit, MultiEdit, Write, WebFetch
 
 Examples:
   - <example>

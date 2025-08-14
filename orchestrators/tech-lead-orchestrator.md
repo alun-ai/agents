@@ -2,7 +2,6 @@
 name: tech-lead-orchestrator
 description: Analyzes architecture requirements and delegates implementation to specialized agents
 model: opus
-tools: Task, Read, Grep, Glob, TodoWrite
 
 Examples:
   - <example>
