@@ -215,33 +215,33 @@ Before moving to next issue:
 // Example TodoWrite usage for project tracking with agent delegation
 const projectTasks = [
   // Phase 1: Planning
-  { id: "1", content: "@code-archaeologist - Analyze existing codebase structure", status: "pending"},
-  { id: "2", content: "@tech-lead-orchestrator - Design system architecture", status: "pending"},
-  { id: "3", content: "@github-manager - Create GitHub tracking issues", status: "pending"},
+  { id: "1", content: "Analyze existing codebase structure", agent: "code-archaeologist", status: "pending"},
+  { id: "2", content: "Design system architecture", agent: "tech-lead-orchestrator", status: "pending"},
+  { id: "3", content: "Create GitHub tracking issues", agent: "github-manager", status: "pending"},
 
   // Phase 2: Database Setup
-  { id: "4", content: "@database-engineer - Design database schema", status: "pending"},
-  { id: "5", content: "@database-engineer - Create migration files", status: "pending"},
-  { id: "6", content: "@database-engineer - Validate constraints and indexes", status: "pending"},
+  { id: "4", content: "Design database schema", agent: "database-engineer", status: "pending"},
+  { id: "5", content: "Create migration files", agent: "database-engineer", status: "pending"},
+  { id: "6", content: "Validate constraints and indexes", agent: "database-engineer", status: "pending"},
 
   // Phase 3: Backend Development
-  { id: "7", content: "@typescript-engineer - Implement authentication API", status: "pending"},
-  { id: "8", content: "@typescript-engineer - Create user management endpoints", status: "pending"},
-  { id: "9", content: "@typescript-engineer - Add input validation and error handling", status: "pending"},
+  { id: "7", content: "Implement authentication API", agent: "typescript-engineer", status: "pending"},
+  { id: "8", content: "Create user management endpoints", agent: "typescript-engineer", status: "pending"},
+  { id: "9", content: "Add input validation and error handling", agent: "typescript-engineer", status: "pending"},
 
   // Phase 4: Frontend Development
-  { id: "10", content: "@react-engineer - Build login component", status: "pending"},
-  { id: "11", content: "@react-engineer - Implement dashboard layout", status: "pending"},
-  { id: "12", content: "@react-engineer - Add responsive design", status: "pending"},
+  { id: "10", content: "Build login component", agent: "react-engineer", status: "pending"},
+  { id: "11", content: "Implement dashboard layout", agent: "react-engineer", status: "pending"},
+  { id: "12", content: "Add responsive design", agent: "react-engineer", status: "pending"},
 
   // Phase 5: Testing & Review
-  { id: "13", content: "@code-archaeologist - Review authentication implementation", status: "pending"},
-  { id: "14", content: "@performance-optimizer - Performance audit of API endpoints", status: "pending"},
-  { id: "15", content: "@code-reviewer - Security review of auth flow", status: "pending"},
+  { id: "13", content: "Review authentication implementation", agent: "code-archaeologist", status: "pending"},
+  { id: "14", content: "Performance audit of API endpoints", agent: "performance-optimizer", status: "pending"},
+  { id: "15", content: "Security review of auth flow", agent: "code-reviewer", status: "pending"},
 
   // Phase 6: Documentation
-  { id: "16", content: "@documentation-specialist - Document API endpoints", status: "pending"},
-  { id: "17", content: "@github-manager - Update GitHub issues with completion", status: "pending"},
+  { id: "16", content: "Document API endpoints", agent: "documentation-specialist", status: "pending"},
+  { id: "17", content: "Update GitHub issues with completion", agent: "github-manager", status: "pending"},
 ];
 
 // Status transitions: pending → in_progress → completed
