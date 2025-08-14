@@ -18,6 +18,7 @@ Planning and reviewing agents are configured to use **Claude Opus 4.1** (`opus`)
 - **`performance-optimizer`** - Performance optimization expert for system bottlenecks
 
 ### Orchestrator Agents
+- **`friday`** - Intelligent task router and communication proxy that delegates to all specialized agents
 - **`project-manager`** - Expert project manager coordinating large-scale engineering projects
 - **`github-manager`** - Expert GitHub issue orchestrator for task and investigation management
 - **`jira-manager`** - Expert Jira ticket manager with component-based routing and agent delegation
@@ -35,7 +36,6 @@ Planning and reviewing agents are configured to use **Claude Opus 4.1** (`opus`)
 - **`react-state-manager`** - Expert in React state management solutions
 
 ### Specialized Experts
-- **`tailwind-css-expert`** - Expert frontend developer specializing in Tailwind CSS
 - **`seo-optimizer`** - Expert in search engine optimization and organic traffic
 - **`chief-of-staff`** - Expert in DevOps metrics and engineering analytics
 
@@ -60,6 +60,22 @@ brew install jira-cli
 ```
 
 ## WORKFLOW
+
+### Using Friday as Your Task Router
+
+For general development tasks, you can use Friday as your primary interface:
+
+```
+@friday [your request or task]
+```
+
+Friday will analyze your request and automatically route it to the appropriate specialist agents. Examples:
+
+- "The dashboard is loading slowly" → Routes to performance-optimizer
+- "Add dark mode to the app" → Routes to react-engineer
+- "Fix the login bug" → Routes to code-archaeologist → appropriate engineer
+- "Review my code for security" → Routes to code-reviewer
+- "Document the new API" → Routes to documentation-specialist
 
 ### 0. Create a new feature branch
 ```

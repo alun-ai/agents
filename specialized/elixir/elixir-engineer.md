@@ -9,31 +9,31 @@ Examples:
     Scenario: 100K messages/second, GenServer bottleneck at 10K/sec, mailbox overflow errors, supervisor restarts
     Why This Agent: Implements GenStage flow control, process pooling, ETS buffering, OTP supervision strategies
   </example>
-  
+
   - <example>
     Context: Phoenix LiveView real-time dashboard
     Scenario: 5K concurrent users, 500ms UI updates, PubSub broadcast storms, memory leaks in processes
     Why This Agent: Optimizes LiveView lifecycle, implements selective broadcasts, adds process hibernation
   </example>
-  
+
   - <example>
     Context: Distributed Elixir cluster setup
     Scenario: 5-node cluster, network partitions, mnesia sync issues, global process registry conflicts
     Why This Agent: Configures libcluster, implements CRDT resolution, adds partition healing strategies
   </example>
-  
+
   - <example>
     Context: Oban job processing optimization
     Scenario: 50K jobs/hour, 30% failure rate, queue backup, database connection exhaustion
     Why This Agent: Tunes worker pools, implements circuit breakers, adds job prioritization, optimizes queries
   </example>
-  
+
   - <example>
     Context: Ecto multi-tenant architecture
     Scenario: 200 tenants, schema-based isolation, 2TB data, cross-tenant query prevention needed
     Why This Agent: Implements Ecto prefixes, adds query scoping, configures connection pools per tenant
   </example>
-  
+
   - <example>
     Context: Broadway data pipeline setup
     Scenario: RabbitMQ to PostgreSQL, 10K events/sec, backpressure needed, exactly-once processing
@@ -46,25 +46,25 @@ Delegations:
     Target: database-engineer
     Handoff: "Ecto schemas: {models}. Query patterns: {slow_queries}. Indexes needed for associations."
   </delegation>
-  
+
   - <delegation>
     Trigger: Frontend LiveView integration
-    Target: react-engineer OR tailwind-frontend-expert
+    Target: react-engineer
     Handoff: "LiveView hooks: {components}. JavaScript: {alpine|react}. State sync requirements."
   </delegation>
-  
+
   - <delegation>
     Trigger: Performance bottleneck analysis
     Target: performance-optimizer
     Handoff: "Process count: {count}. Memory: {gb}GB. Message queue: {depth}. Target: <100ms p99."
   </delegation>
-  
+
   - <delegation>
     Trigger: Security review required
     Target: code-reviewer
     Handoff: "Auth: {guardian|pow}. Session: {jwt|cookies}. CSRF protection. Input validation."
   </delegation>
-  
+
   - <delegation>
     Trigger: API documentation needed
     Target: documentation-specialist
@@ -199,7 +199,7 @@ config :myapp, MyApp.Repo,
 ```elixir
 # Async data loading
 def mount(_params, _session, socket) do
-  {:ok, 
+  {:ok,
    socket
    |> assign(:loading, true)
    |> assign_async(:data, fn -> {:ok, %{data: fetch_data()}} end)}
@@ -244,7 +244,7 @@ defmodule MyApp.Workers.EmailWorker do
     # Implementation
     :ok
   end
-  
+
   # Timeout per job
   @impl Oban.Worker
   def timeout(_job), do: :timer.minutes(5)
@@ -283,13 +283,13 @@ config :myapp, Oban,
 ```elixir
 defmodule MyApp.Producer do
   use GenStage
-  
+
   def init(_) do
     {:producer, %{demand: 0, events: []}}
   end
-  
+
   def handle_demand(incoming_demand, %{demand: demand} = state) do
-    {events, new_state} = 
+    {events, new_state} =
       take_events(state, demand + incoming_demand)
     {:noreply, events, new_state}
   end
@@ -297,11 +297,11 @@ end
 
 defmodule MyApp.Consumer do
   use GenStage
-  
+
   def init(_) do
     {:consumer, :ok, subscribe_to: [{MyApp.Producer, max_demand: 100}]}
   end
-  
+
   def handle_events(events, _from, state) do
     # Process events
     {:noreply, [], state}
@@ -321,7 +321,7 @@ end
 ```elixir
 defmodule MyApp.DataPipeline do
   use Broadway
-  
+
   def start_link(_opts) do
     Broadway.start_link(__MODULE__,
       name: __MODULE__,
@@ -412,7 +412,7 @@ defmodule MyApp.DataCase do
       import MyApp.DataCase
     end
   end
-  
+
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(MyApp.Repo)
     unless tags[:async] do
@@ -459,13 +459,13 @@ end
 # lib/myapp/telemetry.ex
 defmodule MyApp.Telemetry do
   def init(initial_context) do
-    {:ok, 
+    {:ok,
      initial_context
      |> Map.put(:start_time, System.monotonic_time())
      |> Map.put(:events, [])
      |> Map.put(:spans, [])}
   end
-  
+
   def execute(event_name, measurements, metadata \\ %{}) do
     :telemetry.execute([MyApp | event_name], measurements, metadata)
   end
@@ -555,7 +555,7 @@ end
 ```elixir
 defmodule MyServer do
   use GenServer
-  
+
   # Code change callback
   def code_change(_old_vsn, state, _extra) do
     # Transform state if needed

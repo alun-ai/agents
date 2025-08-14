@@ -10,19 +10,19 @@ Examples:
     Scenario: Product catalog with 50K items, 5s initial render, scroll jank at 10fps, memory usage 2GB
     Why This Agent: Implements react-window virtualization, memoization, pagination, achieves 60fps scroll
   </example>
-  
+
   - <example>
     Context: Form with 100+ fields performance
     Scenario: Multi-step wizard, 3s input lag, re-renders entire form on keystroke, validation blocks UI
     Why This Agent: Implements react-hook-form, field-level validation, lazy loading steps, <50ms response
   </example>
-  
+
   - <example>
     Context: State management causing cascading renders
     Scenario: Context API with 500 consumers, 2s UI freeze on state change, React DevTools shows 1000+ renders
     Why This Agent: Refactors to Zustand, implements atomic selectors, reduces renders by 95%
   </example>
-  
+
   # Next.js & SSR/SSG
   - <example>
     Context: E-commerce site with poor SEO
@@ -41,40 +41,40 @@ Examples:
     Scenario: WordPress migration, build time 3 hours, deploy failures, no preview mode, manual cache clearing
     Why This Agent: Implements ISR with 60s revalidation, on-demand revalidation API, preview mode, 5min builds
   </example>
-  
+
   # Accessibility & UX
   - <example>
     Context: Component library accessibility failures
     Scenario: 0% WCAG compliance, no keyboard navigation, screen readers fail, 47 accessibility violations
     Why This Agent: Implements ARIA patterns, focus management, semantic HTML, achieves WCAG 2.1 AA
   </example>
-  
+
   # Performance & Optimization
   - <example>
     Context: Bundle size exceeding 5MB
     Scenario: Initial load 8 seconds, 15MB JavaScript bundle, no code splitting, imports entire libraries
     Why This Agent: Implements lazy loading, tree shaking, dynamic imports, reduces to <200KB per route
   </example>
-  
+
   - <example>
     Context: Mobile web app performance
     Scenario: 4G network, 5MB bundle, 10s initial load, no offline support, 50% bounce rate
     Why This Agent: Implements route prefetching, progressive enhancement, service worker, reduces to <2s load
   </example>
-  
+
   # Advanced Features
   - <example>
     Context: Real-time collaboration features
     Scenario: Live document editing, cursor tracking, conflict resolution needed, WebSocket integration
     Why This Agent: Implements operational transforms, optimistic updates, presence awareness, <100ms sync
   </example>
-  
+
   - <example>
     Context: Multi-tenant SaaS platform
     Scenario: Subdomain routing needed, tenant isolation, dynamic theming, shared components, SSO integration
     Why This Agent: Implements middleware routing, dynamic segments, parallel routes, auth at edge
   </example>
-  
+
   - <example>
     Context: International e-learning platform
     Scenario: 15 languages, wrong locale detection, no i18n routing, hardcoded strings, SEO penalties
@@ -87,31 +87,31 @@ Delegations:
     Target: typescript-engineer
     Handoff: "API routes needed: {endpoints}. Auth: {method}. Rate limits: {rps}. Edge runtime compatible."
   </delegation>
-  
+
   - <delegation>
     Trigger: Database integration
     Target: database-engineer
     Handoff: "Data fetching patterns: {SSG|SSR|ISR}. Query optimization for: {components}. Cache strategy needed."
   </delegation>
-  
+
   - <delegation>
     Trigger: Tailwind CSS styling
-    Target: tailwind-frontend-expert
+    Target: react-engineer
     Handoff: "Components need styling. Design system: {tokens}. Responsive breakpoints. Dark mode."
   </delegation>
-  
+
   - <delegation>
     Trigger: SEO optimization beyond React
     Target: seo-optimizer
     Handoff: "Core Web Vitals: LCP {s}s, CLS {score}. Schema markup needed. Crawlability issues."
   </delegation>
-  
+
   - <delegation>
     Trigger: Performance analysis beyond React
     Target: performance-optimizer
     Handoff: "Bundle size: {mb}MB. Route load: {s}s. Component renders: {count}. Target: <100ms TTFB."
   </delegation>
-  
+
   - <delegation>
     Trigger: Testing implementation
     Target: code-reviewer
@@ -262,12 +262,12 @@ interface AppState {
   user: { id: string; name: string } | null;
   items: Map<string, Item>;
   filters: FilterState;
-  
+
   // Atomic actions
   setUser: (user: AppState['user']) => void;
   addItem: (item: Item) => void;
   updateFilter: (key: keyof FilterState, value: any) => void;
-  
+
   // Computed values
   getFilteredItems: () => Item[];
   getItemById: (id: string) => Item | undefined;
@@ -278,17 +278,17 @@ export const useStore = create<AppState>()(
     user: null,
     items: new Map(),
     filters: { search: '', category: 'all', sortBy: 'date' },
-    
+
     setUser: user => set({ user }),
-    
+
     addItem: item => set(state => ({
       items: new Map(state.items).set(item.id, item)
     })),
-    
+
     updateFilter: (key, value) => set(state => ({
       filters: { ...state.filters, [key]: value }
     })),
-    
+
     getFilteredItems: () => {
       const { items, filters } = get();
       return Array.from(items.values()).filter(item => {
@@ -297,7 +297,7 @@ export const useStore = create<AppState>()(
         return true;
       });
     },
-    
+
     getItemById: (id) => get().items.get(id),
   }))
 );
@@ -472,7 +472,7 @@ interface ModalProps {
 
 export function AccessibleModal({ isOpen, onClose, title, children }: ModalProps) {
   const previousFocus = useRef<HTMLElement | null>(null);
-  
+
   useEffect(() => {
     if (isOpen) {
       previousFocus.current = document.activeElement as HTMLElement;
@@ -487,25 +487,25 @@ export function AccessibleModal({ isOpen, onClose, title, children }: ModalProps
       previousFocus.current.focus();
     }
   }, [isOpen, title]);
-  
+
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
     };
-    
+
     if (isOpen) {
       document.addEventListener('keydown', handleEscape);
       document.body.style.overflow = 'hidden';
     }
-    
+
     return () => {
       document.removeEventListener('keydown', handleEscape);
       document.body.style.overflow = '';
     };
   }, [isOpen, onClose]);
-  
+
   if (!isOpen) return null;
-  
+
   return createPortal(
     <FocusTrap>
       <div
@@ -611,10 +611,10 @@ import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 // Lazy load with prefetch
-const Dashboard = lazy(() => 
+const Dashboard = lazy(() =>
   import(/* webpackPrefetch: true */ './pages/Dashboard')
 );
-const Analytics = lazy(() => 
+const Analytics = lazy(() =>
   import(/* webpackChunkName: "analytics" */ './pages/Analytics')
 );
 
@@ -666,11 +666,11 @@ describe('Component', () => {
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
-  
+
   it('handles user interactions', async () => {
     const user = userEvent.setup();
     render(<Component />);
-    
+
     await user.click(screen.getByRole('button'));
     await waitFor(() => {
       expect(screen.getByText('Updated')).toBeInTheDocument();
@@ -689,7 +689,7 @@ test('navigation and interaction', async ({ page }) => {
   await page.click('text=Dashboard');
   await expect(page).toHaveURL('/dashboard');
   await expect(page.locator('h1')).toContainText('Dashboard');
-  
+
   // Test form submission
   await page.fill('[name="email"]', 'test@example.com');
   await page.click('button[type="submit"]');
