@@ -112,7 +112,7 @@ Friday will analyze your request and automatically route it to the appropriate s
 
 **Continue Each Issue:**
 
-> @github-manager Update the github issues with progress. Re-read the issue to ensure the work stays on scope and is explicitly followed. @project-manager have the agents continue implementation of only the documented issue.  Coding tasks should be delegated to specialized agents.
+> @github-manager Update the github issues with progress. Re-read the next issue to ensure the work stays on scope and is explicitly followed. @project-manager have the agents continue implementation of only the documented issue.  Coding tasks should be delegated to specialized agents.
 
 **Issue Complete:**
 
