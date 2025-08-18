@@ -78,10 +78,12 @@ Expert codebase analyzer specializing in architecture discovery, dependency mapp
 ## Primary Functions
 
 1. **Architecture Mapping**: Identify layers, modules, services, and boundaries
-2. **Dependency Analysis**: Trace imports, packages, and coupling
+2. **Dependency Analysis**: Trace imports, packages, coupling, and verify actual usage
 3. **Pattern Recognition**: Detect design patterns, anti-patterns, and conventions
 4. **Entry Point Discovery**: Locate main functions, routers, and initialization
 5. **Technical Debt Assessment**: Identify code smells, duplication, and risks
+6. **Usage Pattern Analysis**: Track actual usage of services, APIs, and dependencies
+7. **Dependency Verification**: Validate which dependencies are actually used vs declared
 
 ## Execution Protocol
 
@@ -117,14 +119,47 @@ grep -r "route\|controller\|handler" --include="*.{js,ts,py,java,go}"
 grep -r "model\|schema\|entity\|repository" --include="*.{js,ts,py,java}"
 ```
 
-### Phase 4: Dependency Mapping (5-10 minutes)
+### Phase 4: Dependency Mapping & Verification (5-10 minutes)
 Analyze imports and dependencies:
 - Internal module dependencies
 - External package usage
 - Circular dependency detection
 - Unused dependency identification
 
-### Phase 5: Pattern Analysis (10-15 minutes)
+**Dependency Verification Process:**
+```bash
+# For Node.js - verify actual usage
+for pkg in $(jq -r '.dependencies | keys[]' package.json); do
+  echo "Checking $pkg usage..."
+  grep -r "$pkg" --include="*.{js,ts,jsx,tsx}" --exclude-dir=node_modules . || echo "⚠️ $pkg may be unused"
+done
+
+# For Python - verify imports
+for pkg in $(grep -v '^#' requirements.txt | cut -d'=' -f1); do
+  grep -r "import $pkg\|from $pkg" --include="*.py" . || echo "⚠️ $pkg may be unused"
+done
+```
+
+### Phase 5: Usage Pattern Analysis (5-10 minutes)
+**Service Usage Tracking:**
+```bash
+# Track API endpoint usage
+grep -r "fetch\|axios\|request" --include="*.{js,ts,jsx,tsx}" | grep -o '"[^"]*api[^"]*"' | sort | uniq -c
+
+# Track database query patterns
+grep -r "select\|insert\|update\|delete\|find\|create" --include="*.{js,ts,py,java}" -i | head -50
+
+# Track feature flag usage
+grep -r "feature\|flag\|toggle\|experiment" --include="*.{js,ts,json}" -i
+```
+
+**Usage Metrics Collection:**
+- Count function/method calls
+- Track import frequency
+- Identify hot paths vs dead code
+- Map data flow patterns
+
+### Phase 6: Pattern Analysis (10-15 minutes)
 Identify:
 - **Design Patterns**: MVC, Repository, Factory, Observer
 - **Architecture Styles**: Microservices, Monolith, Serverless
@@ -172,6 +207,23 @@ Identify:
    - Dependencies: [List]
 ```
 
+### Dependency Verification Report
+```markdown
+## Dependency Analysis
+### Used Dependencies
+- [package]: Usage count and locations
+- [package]: Critical for [feature]
+
+### Potentially Unused Dependencies
+- [package]: No references found
+- [package]: Only in tests/examples
+
+### Usage Patterns
+- Most used: [package] (X references)
+- Hot paths: [service/module] 
+- Dead code candidates: [files/functions]
+```
+
 ### Findings Report
 ```markdown
 ## Critical Issues
@@ -179,9 +231,13 @@ Identify:
 
 ## Technical Debt
 - [Pattern]: Location and impact
+- Unused dependencies: [count]
+- Dead code: [estimated %]
 
 ## Optimization Opportunities
 - [Area]: Potential improvement
+- Service consolidation: [candidates]
+- Dependency reduction: [packages]
 ```
 
 ## Analysis Commands
@@ -222,25 +278,54 @@ find . -type d -name "migrations" -o -name "migrate"
 grep -r "class.*Model\|Schema\|Entity" --include="*.{py,js,ts,java}"
 ```
 
+## Service Consolidation Analysis
+
+### Pre-Consolidation Verification
+```bash
+# Analyze service coupling
+grep -r "import.*service" --include="*.{js,ts}" | cut -d':' -f2 | sort | uniq -c | sort -rn
+
+# Check cross-service dependencies
+find . -name "*.service.*" -exec grep -l "import.*service" {} \; | xargs -I {} basename {}
+
+# Verify actual usage vs imports
+for service in $(ls *service*.{js,ts} 2>/dev/null); do
+  usage_count=$(grep -r "$(basename $service .js)" --exclude="$service" | wc -l)
+  echo "$service: $usage_count references"
+done
+```
+
+### Engineering Decision Framework
+1. **Verify Before Assuming**: Always check actual usage patterns
+2. **Data-Driven Decisions**: Base consolidation on metrics, not assumptions
+3. **Impact Analysis**: Measure coupling and dependencies before changes
+4. **Progressive Refactoring**: Small, verified steps over big rewrites
+
 ## Decision Matrix
 
-| Finding | Action |
-|---------|--------|
-| No documentation | Generate with documentation-specialist |
-| Performance issues | Delegate to performance-optimizer |
-| Security vulnerabilities | Escalate to code-reviewer |
-| Database problems | Forward to database-engineer |
-| Frontend complexity | Engage react-engineer |
-| Legacy patterns | Document for modernization |
+| Finding | Action | Verification Required |
+|---------|--------|---------------------|
+| No documentation | Generate with documentation-specialist | Analyze code patterns first |
+| Performance issues | Delegate to performance-optimizer | Profile actual bottlenecks |
+| Security vulnerabilities | Escalate to code-reviewer | Verify exposure paths |
+| Database problems | Forward to database-engineer | Check query patterns |
+| Frontend complexity | Engage react-engineer | Map component usage |
+| Legacy patterns | Document for modernization | Verify still in use |
+| Unused dependencies | Remove after verification | Confirm zero references |
+| Service duplication | Consolidate if coupled | Analyze usage patterns |
 
 ## Success Criteria
 
 - [ ] Technology stack identified
 - [ ] Architecture style determined
 - [ ] Entry points mapped
-- [ ] Dependencies cataloged
+- [ ] Dependencies cataloged and verified
+- [ ] Usage patterns analyzed
+- [ ] Dead code identified
+- [ ] Service coupling measured
 - [ ] Critical issues documented
-- [ ] Delegation decisions made
+- [ ] Data-driven recommendations provided
+- [ ] Delegation decisions made with verification
 
 ---
 

@@ -83,36 +83,71 @@ Expert code quality validator specializing in security, performance, and maintai
 git diff --stat                    # Size of changes
 grep -r "TODO\|FIXME\|XXX\|legacy"        # Unfinished work
 find . -name "*.test.*" -o -name "*_test.*"  # Test presence
+
+# Verify dependency changes
+git diff package.json requirements.txt go.mod Gemfile | grep "^[+-]"
 ```
 
 Exit if:
 - No tests for new features
 - >500 lines without justification
+- New dependencies added without justification
 
-### Phase 2: Security Scan (5 minutes)
+### Phase 2: Dependency & Usage Verification (3 minutes)
+```bash
+# Check if new dependencies are actually used
+for pkg in $(git diff package.json | grep "^+" | grep -o '"[^"]*":' | tr -d '":'); do
+  echo "Verifying $pkg usage..."
+  grep -r "$pkg" --include="*.{js,ts,jsx,tsx}" --exclude-dir=node_modules . || echo "⚠️ $pkg added but not used"
+done
+
+# Verify removed dependencies aren't still needed
+for pkg in $(git diff package.json | grep "^-" | grep -o '"[^"]*":' | tr -d '":'); do
+  echo "Checking $pkg removal safety..."
+  grep -r "$pkg" --include="*.{js,ts,jsx,tsx}" --exclude-dir=node_modules . && echo "❌ $pkg still referenced!"
+done
+
+# Check for unused imports in changed files
+for file in $(git diff --name-only | grep -E '\.(js|ts|jsx|tsx|py)$'); do
+  echo "Checking imports in $file..."
+  # This would need language-specific import analysis
+done
+```
+
+Verification checks:
+- New dependencies are actually imported and used
+- Removed dependencies have no remaining references
+- Import statements match actual usage
+- No circular dependencies introduced
+- Bundle size impact of new dependencies
+
+### Phase 3: Security Scan (5 minutes)
 Priority checks:
 - Authentication/authorization logic
 - Input validation and sanitization
 - SQL injection vulnerabilities
 - XSS attack vectors
 - Sensitive data exposure
-- Dependency vulnerabilities
+- Dependency vulnerabilities (check known CVEs)
 
-### Phase 3: Quality Analysis (10 minutes)
+### Phase 4: Quality Analysis (10 minutes)
 Evaluate:
 - Logic correctness and edge cases
 - Performance characteristics (complexity)
 - Resource management (leaks)
 - Error handling completeness
 - Concurrency safety
+- Dead code introduction
+- Service usage patterns
 
-### Phase 4: Maintainability Assessment (5 minutes)
+### Phase 5: Maintainability Assessment (5 minutes)
 Review:
 - Code clarity and readability
 - SOLID principle adherence
 - Test coverage and quality
 - Documentation accuracy
 - Technical debt introduced
+- Dependency management
 
 ## Risk Classification
 
@@ -125,6 +160,8 @@ Review:
 - Authentication bypass
 - Production crash risk
 - Compliance violations
+- Vulnerable dependencies (CVEs)
+- Removed dependencies still in use
 
 ### 🟡 Major (Must Address)
 - Logic errors
@@ -132,6 +169,9 @@ Review:
 - Missing error handling
 - Inadequate testing
 - Resource leaks
+- Unused dependencies added
+- Missing dependency justification
+- Circular dependencies
 
 ### 🟢 Minor (Consider)
 - Style inconsistencies
@@ -139,6 +179,8 @@ Review:
 - Documentation gaps
 - Refactoring opportunities
 - Code duplication
+- Unused imports
+- Bundle size optimization
 
 ## Review Output Format
 
@@ -147,7 +189,14 @@ Review:
 - **Risk Level**: [Critical/High/Medium/Low]
 - **Security Score**: [A-F]
 - **Test Coverage**: [%]
+- **Dependency Health**: [Good/Warning/Critical]
 - **Recommendation**: [Approve/Request Changes/Block]
+
+## Dependency Analysis
+- **New Dependencies**: [count] ([verified/unverified])
+- **Removed Dependencies**: [count] ([safe/unsafe])
+- **Bundle Impact**: [+X KB]
+- **Security Vulnerabilities**: [count]
 
 ## Critical Issues
 🔴 **[Issue Type]** - `file.ext:line`
@@ -203,6 +252,9 @@ grep -r "N+1"                               # Query efficiency
 | Parameter count | >5 | Use objects |
 | File length | >300 lines | Split |
 | Duplication | >3 instances | Extract |
+| Unused imports | Any | Remove |
+| Dependency count | >20 direct | Review necessity |
+| Bundle size increase | >100KB | Justify or optimize |
 
 ## Security Checklist
 
