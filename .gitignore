@@ -4,6 +4,8 @@
 ./hooks/conversation_tracker.json
 ./hooks/*.log
 
+specialized/hiring/vp-engineering-interviewer.md
+
 # OS generated files
 .DS_Store
 .DS_Store?

@@ -24,12 +24,20 @@
         "@modelcontextprotocol/server-sequential-thinking"
       ]
     },
-    "memory": {
-      "command": "npx",
+    "serena": {
+      "type": "stdio",
+      "command": "uvx",
       "args": [
-        "-y",
-        "@modelcontextprotocol/server-memory"
-      ]
+        "--from",
+        "git+https://github.com/oraios/serena",
+        "serena",
+        "start-mcp-server",
+        "--context",
+        "ide-assistant",
+        "--project",
+        "."
+      ],
+      "env": {}
     }
   }
 }
