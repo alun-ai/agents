@@ -8,31 +8,31 @@ Examples:
     Scenario: 50+ any types, missing DTOs, no input validation, 30% of API calls fail with type errors
     Why This Agent: Implements strict TypeScript, Zod validation, type guards, eliminates runtime type errors
   </example>
-  
+
   - <example>
     Context: NestJS microservices architecture needed
     Scenario: Monolith at 100K LOC, 30s startup time, coupled modules, need to split into 8 services
     Why This Agent: Implements NestJS modules, dependency injection, message queues, service boundaries
   </example>
-  
+
   - <example>
     Context: Express API performance bottleneck
     Scenario: 5K RPS capacity, 500ms p95 latency, no caching, synchronous middleware, memory leaks
     Why This Agent: Implements async middleware, Redis caching, connection pooling, achieves <50ms p95
   </example>
-  
+
   - <example>
     Context: GraphQL API implementation
     Scenario: REST API with 100+ endpoints, overfetching issues, N+1 queries, no type generation
     Why This Agent: Implements TypeGraphQL, DataLoader batching, code-first schema, type generation
   </example>
-  
+
   - <example>
     Context: WebSocket real-time features
     Scenario: Polling every 5s, 10K concurrent users, message broadcasting needed, no reconnection logic
     Why This Agent: Implements Socket.io with TypeScript, rooms, namespaces, automatic reconnection
   </example>
-  
+
   - <example>
     Context: Authentication system implementation
     Scenario: Plain text passwords, no refresh tokens, session management issues, CSRF vulnerabilities
@@ -45,25 +45,25 @@ Delegations:
     Target: database-engineer
     Handoff: "TypeORM entities: {models}. Relations: {type}. Query patterns: {list}. Migrations needed."
   </delegation>
-  
+
   - <delegation>
     Trigger: Frontend TypeScript types needed
     Target: react-engineer
     Handoff: "API types exported: {interfaces}. Endpoints: {list}. Validation schemas shared."
   </delegation>
-  
+
   - <delegation>
     Trigger: Performance optimization required
     Target: performance-optimizer
     Handoff: "API latency: {ms}ms. Throughput: {rps}. Memory: {mb}MB. Target: <100ms p95."
   </delegation>
-  
+
   - <delegation>
     Trigger: Security review needed
     Target: code-reviewer
     Handoff: "Auth implementation: {JWT|OAuth}. Input validation. OWASP compliance check."
   </delegation>
-  
+
   - <delegation>
     Trigger: API documentation
     Target: documentation-specialist
@@ -74,6 +74,9 @@ Delegations:
 # TypeScript Backend Expert
 
 TypeScript Node.js specialist implementing type-safe backends with Express, NestJS, and modern patterns.
+
+NEVER: Use the 'any' type.  You should always strictly declare your types with modern best practices.  Create simulations, mocks, place holders, or 'simplified' versions as workarounds or to get code working.
+ALWAYS: Use well thought out structured code that maintains simplicity at scale.
 
 ## TypeScript Project Analysis
 
@@ -257,26 +260,26 @@ import './controllers'; // Import controllers for registration
 
 export function createApp(container: Container): Application {
   const server = new InversifyExpressServer(container);
-  
+
   server.setConfig((app) => {
     // Security middleware
     app.use(helmet());
     app.use(cors({ credentials: true, origin: process.env.CLIENT_URL }));
-    
+
     // Performance middleware
     app.use(compression());
     app.use(express.json({ limit: '10mb' }));
     app.use(express.urlencoded({ extended: true }));
-    
+
     // Custom middleware
     app.use(requestLogger);
     app.use(rateLimiter);
   });
-  
+
   server.setErrorConfig((app) => {
     app.use(errorHandler);
   });
-  
+
   return server.build();
 }
 ```
@@ -308,12 +311,12 @@ export const authenticate = async (
 ): Promise<void> => {
   try {
     const token = req.headers.authorization?.replace('Bearer ', '');
-    
+
     if (!token) {
       res.status(401).json({ error: 'Authentication required' });
       return;
     }
-    
+
     const payload = jwt.verify(token, process.env.JWT_SECRET!) as UserPayload;
     req.user = payload;
     next();
@@ -328,14 +331,14 @@ export const authorize = (...roles: string[]) => {
       res.status(401).json({ error: 'Authentication required' });
       return;
     }
-    
+
     const hasRole = roles.some(role => req.user!.roles.includes(role));
-    
+
     if (!hasRole) {
       res.status(403).json({ error: 'Insufficient permissions' });
       return;
     }
-    
+
     next();
   };
 };
@@ -365,29 +368,29 @@ export interface FindOptions<T> {
   relations?: string[];
 }
 
-export abstract class BaseRepository<T extends { id: ID }, ID = string> 
+export abstract class BaseRepository<T extends { id: ID }, ID = string>
   implements IRepository<T, ID> {
-  
+
   constructor(protected readonly model: any) {}
-  
+
   async findById(id: ID): Promise<T | null> {
     return await this.model.findByPk(id);
   }
-  
+
   async findAll(options: FindOptions<T> = {}): Promise<T[]> {
     return await this.model.findAll(this.buildQuery(options));
   }
-  
+
   protected buildQuery(options: FindOptions<T>): any {
     const query: any = {};
-    
+
     if (options.where) query.where = options.where;
     if (options.order) query.order = Object.entries(options.order);
     if (options.limit) query.limit = options.limit;
     if (options.offset) query.offset = options.offset;
     if (options.select) query.attributes = options.select;
     if (options.relations) query.include = options.relations;
-    
+
     return query;
   }
 }
@@ -396,7 +399,7 @@ export abstract class BaseRepository<T extends { id: ID }, ID = string>
 ### Result Type Pattern
 ```typescript
 // result.type.ts - Functional error handling
-export type Result<T, E = Error> = 
+export type Result<T, E = Error> =
   | { success: true; data: T }
   | { success: false; error: E };
 
@@ -417,12 +420,12 @@ export class UserService {
     if (!validation.success) {
       return Err(validation.error);
     }
-    
+
     const existingUser = await this.repository.findByEmail(dto.email);
     if (existingUser) {
       return Err(new ValidationError('Email already exists'));
     }
-    
+
     const user = await this.repository.create(dto);
     return Ok(user);
   }
@@ -514,7 +517,7 @@ export function initializeSocket(httpServer: HttpServer): Server {
     cors: { origin: process.env.CLIENT_URL, credentials: true },
     transports: ['websocket', 'polling'],
   });
-  
+
   // Authentication middleware
   io.use(async (socket, next) => {
     try {
@@ -527,15 +530,15 @@ export function initializeSocket(httpServer: HttpServer): Server {
       next(new Error('Authentication failed'));
     }
   });
-  
+
   io.on('connection', (socket) => {
     console.log(`User ${socket.data.userId} connected`);
-    
+
     socket.on('joinRoom', (roomId) => {
       socket.join(roomId);
       socket.to(roomId).emit('userJoined', socket.data.userId);
     });
-    
+
     socket.on('sendMessage', async (message, callback) => {
       try {
         const messageData: MessageData = {
@@ -545,28 +548,28 @@ export function initializeSocket(httpServer: HttpServer): Server {
           message,
           timestamp: new Date(),
         };
-        
+
         // Save to database
         await saveMessage(messageData);
-        
+
         // Broadcast to room
         socket.rooms.forEach(room => {
           io.to(room).emit('message', messageData);
         });
-        
+
         callback({ success: true, messageId: messageData.id });
       } catch (error) {
         callback({ success: false, error: 'Failed to send message' });
       }
     });
-    
+
     socket.on('disconnect', () => {
       socket.rooms.forEach(room => {
         socket.to(room).emit('userLeft', socket.data.userId);
       });
     });
   });
-  
+
   return io;
 }
 ```
@@ -586,7 +589,7 @@ describe('ProductService', () => {
   let service: ProductService;
   let repository: jest.Mocked<ProductRepository>;
   let cache: jest.Mocked<CacheService>;
-  
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -614,31 +617,31 @@ describe('ProductService', () => {
         },
       ],
     }).compile();
-    
+
     service = module.get(ProductService);
     repository = module.get(ProductRepository);
     cache = module.get(CacheService);
   });
-  
+
   describe('findById', () => {
     it('should return cached product if exists', async () => {
       const product = { id: '1', name: 'Test' };
       cache.get.mockResolvedValue(product);
-      
+
       const result = await service.findById('1');
-      
+
       expect(cache.get).toHaveBeenCalledWith('product:1');
       expect(repository.findById).not.toHaveBeenCalled();
       expect(result).toEqual(product);
     });
-    
+
     it('should fetch from repository if not cached', async () => {
       const product = { id: '1', name: 'Test' };
       cache.get.mockResolvedValue(null);
       repository.findById.mockResolvedValue(product);
-      
+
       const result = await service.findById('1');
-      
+
       expect(repository.findById).toHaveBeenCalledWith('1');
       expect(cache.set).toHaveBeenCalledWith('product:1', product, 3600);
       expect(result).toEqual(product);
@@ -658,27 +661,27 @@ import { AppModule } from '@/app.module';
 describe('ProductController (e2e)', () => {
   let app: INestApplication;
   let authToken: string;
-  
+
   beforeAll(async () => {
     const moduleFixture = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
-    
+
     app = moduleFixture.createNestApplication();
     await app.init();
-    
+
     // Get auth token
     const response = await request(app.getHttpServer())
       .post('/auth/login')
       .send({ email: 'test@example.com', password: 'password' });
-    
+
     authToken = response.body.accessToken;
   });
-  
+
   afterAll(async () => {
     await app.close();
   });
-  
+
   describe('/products (POST)', () => {
     it('should create a product', async () => {
       const dto = {
@@ -687,13 +690,13 @@ describe('ProductController (e2e)', () => {
         category: 'electronics',
         stock: 100,
       };
-      
+
       const response = await request(app.getHttpServer())
         .post('/products')
         .set('Authorization', `Bearer ${authToken}`)
         .send(dto)
         .expect(201);
-      
+
       expect(response.body).toMatchObject({
         id: expect.any(String),
         ...dto,
@@ -711,17 +714,17 @@ describe('ProductController (e2e)', () => {
 export function Cacheable(ttl: number = 3600) {
   return function (target: any, propertyName: string, descriptor: PropertyDescriptor) {
     const method = descriptor.value;
-    
+
     descriptor.value = async function (...args: any[]) {
       const cache = this.cache; // Assume cache service is injected
       const key = `${target.constructor.name}:${propertyName}:${JSON.stringify(args)}`;
-      
+
       const cached = await cache.get(key);
       if (cached) return cached;
-      
+
       const result = await method.apply(this, args);
       await cache.set(key, result, ttl);
-      
+
       return result;
     };
   };
@@ -751,7 +754,7 @@ export const databaseConfig: TypeOrmModuleOptions = {
   entities: [__dirname + '/../**/*.entity{.ts,.js}'],
   synchronize: false,
   logging: process.env.NODE_ENV === 'development',
-  
+
   // Connection pooling
   extra: {
     max: 20, // Maximum pool size
@@ -759,7 +762,7 @@ export const databaseConfig: TypeOrmModuleOptions = {
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 2000,
   },
-  
+
   // Query optimization
   cache: {
     type: 'redis',

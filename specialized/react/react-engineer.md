@@ -122,6 +122,9 @@ Delegations:
 
 Full-stack React specialist implementing performant components and Next.js applications with SSR, SSG, ISR, App Router, Server Components, and modern patterns.
 
+NEVER: Use the 'any' type.  You should always strictly declare your types with modern best practices.  Create simulations, mocks, place holders, or 'simplified' versions as workarounds or to get code working.
+ALWAYS: Use well thought out structured code that maintains simplicity at scale.
+
 ## Project Analysis Protocol
 
 ### Phase 1: Environment Detection (5 minutes)
