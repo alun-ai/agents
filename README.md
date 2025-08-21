@@ -122,7 +122,7 @@ Friday will analyze your request and automatically route it to the appropriate s
 
 **Perform QA and bug remediation**
 
-> @agent-project-manager we now need to work on QA and bugs.  For all of the remaining prompts until I saw otherwise we will be fixing bugs from the optimization. Use ultrathink and the context of the github issues to investigate and remediate with our agents.
+> @agent-project-manager Now need to do a full QA builds, error messages, console errors and bugs.  Start with running the build and starting the app to ensure no errors. 
 
 **Create a feature review branch off your feature branch**
 This ensures all changes can be review in isolation and can be thrown away if things go sideways
