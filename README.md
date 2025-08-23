@@ -92,7 +92,7 @@ Friday will analyze your request and automatically route it to the appropriate s
 
 **Create High-Level Plan:**
 
-> Create the high level plan of the feature I have no users, the product and platform are in full stealth. You now have access to the code and are the only developer.  Documentation should be documented in ./docs/project/<github-issue-id>. Perform a deep technical analysis to determine what you would need to build and add to implement this feature. Create a detailed plan only, and use @agent-project-manager and @agent-github-manager to document the entire project in GitHub.
+> Create the high level plan (epic) of this feature I have no users, the product and platform are in full stealth. You now have access to the code and are the only developer.  Documentation should be documented in ./docs/issues/<github-issue-id>. Perform a deep technical analysis to determine what you would need to build and add to implement this feature. Create a detailed product plan only, and use @agent-project-manager and @agent-github-manager to document the entire epic in GitHub as a github issue.  No implementation of this plan should start until I have given approval.
 
 
 ### 2. Detailed Implementation Planning
