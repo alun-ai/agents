@@ -92,7 +92,7 @@ Friday will analyze your request and automatically route it to the appropriate s
 
 **Create High-Level Plan:**
 
-> Create the high level plan (epic) of this feature I have no users, the product and platform are in full stealth. You now have access to the code and are the only developer.  Documentation should be documented in ./docs/issues/<github-issue-id>. Perform a deep technical analysis to determine what you would need to build and add to implement this feature. Create a detailed product plan only, and use @agent-project-manager and @agent-github-manager to document the entire epic in GitHub as a github issue.  No implementation of this plan should start until I have given approval.
+> Perform a deep technical analysis to determine what you would need to build and add to implement this feature. Create a detailed impleentation plan - PRD - of this feature. Be clear, conscise and use ascii diagrams to convey intent of the implementation.  The PRD should be detailed and clear so that your future prompt will have all the context it needs to begin implementing the feature once approval is given. All documentation should be documented in ./docs/issues/<github-issue-id>. Ask the @agent-github-manager to document the entire epic locally, then use that to create or update GitHub as a github issue.  No implementation of this plan should start until I have given approval.
 
 
 ### 2. Detailed Implementation Planning
