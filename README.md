@@ -104,10 +104,42 @@ Friday will analyze your request and automatically route it to the appropriate s
 
 ### 3. Implementation Execution
 
-**Begin Implementation:**
+**Simple - Begin Implementation:**
 
 > @agent-project-manager Begin implementation with the agent team. Ensure each agent uses ultrathink and sequential thinking to perform their tasks. Do not advance to the next issue until the current issue's code is implemented, reviewed, optimized, and verified with code reviews against our quality gates.  Have both @code-archaeologist and @code-review review all code before proceeding. Update the tracking issue with progress via @agent-github-manager.
-> .
+
+
+**Advanced - Parallel Implementation:**
+> All references to "agent" means the Claude Code sub-agents. No humans will be doing this work.
+  @agent-project-manager Orchestrate implementation of the <github issue> in parallel. Do not
+  serialize the effort. Create concurrent workstreams with commits and continuous review.
+  Agent roster and responsibilities
+  - @agent-project-manager, plan, sequence, unblock, publish status.
+  - @agent-github-manager, create tracking issue, labels, milestones, boards, progress updates.
+  - @code-archaeologist, early architecture review, repo layout, boundaries, risk callouts.
+  - @code-review, continuous review of all commits and code changes, enforce quality gates.
+  - @typescript-engineer, contracts, types, Zod schemas, SDK client, API handlers, orchestrator
+  service.
+  - @database-engineer, SQL migrations, indexes, RLS, seeds, data backfills, performance.
+  - @qa-ready, unit, integration, E2E, contract tests, fixtures, CI setup.
+  - @react-engineer, UI slideout, status chips, coach picker, formatter rendering.
+
+  All agent task, status, progress should be kept in state in ./docs/<issue>/tasks/<agent>.<task>
+
+  Scope
+  Implement <github issue> PRD.
+  Work breakdown and owners
+  A. Data model and RLS, @database-engineer.
+  B. Backend API service and routing, @typescript-engineer.
+  C. UI integration, @react-engineer.
+  D. Tests and quality, @qa-engineer with all owners.
+  E. Docs and rollout, @agent-project-manager with @agent-github-manager.
+  Execution rules
+  1. Create a single tracking issue that references the PRD locally. Post a Work Breakdown
+  Structure with dependencies and P0, P1, P2 labels as the first comment
+  2. Push small commits. Request review continuously. No long lived unreviewed work.
+  3. Use ultrathink, memory (serena) and sequential thinking inside each workstream. Workstreams
+  run in parallel for each agent.
 
 
 **Continue Each Issue:**
