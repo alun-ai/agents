@@ -92,7 +92,7 @@ Friday will analyze your request and automatically route it to the appropriate s
 
 **Create High-Level Plan:**
 
-> Create a detailed implementation plan - PRD - of this feature. Be clear, conscise and use ascii diagrams to convey intent of the implementation.  The PRD should be detailed and clear so that your future prompt will have all the context it needs to begin implementing the feature once approval is given. All documentation should be documented in ./docs/issues/<github-issue-id>. Ask the @agent-github-manager to document the entire epic locally, then use that to create or update GitHub as a github issue.  No implementation of this plan should start until I have given approval.
+> Create a detailed implementation plan - PRD - of this feature. Be clear, conscise and use ascii diagrams to convey intent of the implementation.  The PRD should be detailed and clear so that your future prompt will have all the context it needs to begin implementing the feature once approval is given. All documentation should be documented in ./docs/issues/<github-issue-id>. Once the PRD and issues are documented locally, ask the @agent-github-manager then use that to create or update GitHub as a github issue.  No implementation of this plan should start until I have reviewed the github issues and given approval.
 
 
 ### 2. Detailed Implementation Planning - this is optional if you created the plan and documentation previously - skip to 3.
