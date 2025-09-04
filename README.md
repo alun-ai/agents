@@ -106,7 +106,18 @@ Friday will analyze your request and automatically route it to the appropriate s
 
 **Simple - Begin Implementation:**
 
-> @agent-project-manager Begin implementation with the agent team. Ensure each agent uses ultrathink and sequential thinking to perform their tasks. Do not advance to the next issue until the current issue's code is implemented, reviewed, optimized, and verified with code reviews against our quality gates.  Have both @code-archaeologist and @code-review review all code before proceeding. Update the tracking issue with progress via @agent-github-manager.
+> @agent-project-manager Begin implementation with the subagent team using this plan and document as the source of truth. Ensure each subagent uses ultrathink and sequential thinking to perform their tasks. Do not advance to the next issue until the current issue's code is implemented, reviewed, optimized, and verified with code reviews against our quality gates.  Have both @code-archaeologist and @code-review review all code before proceeding.
+>
+> Agent roster and responsibilities
+  - @agent-project-manager, plan, sequence, unblock, publish status.
+  - @agent-github-manager, create tracking issue, labels, milestones, boards, progress updates.
+  - @code-archaeologist, early architecture review, repo layout, boundaries, risk callouts.
+  - @code-review, continuous review of all commits and code changes, enforce quality gates.
+  - @typescript-engineer, contracts, types, Zod schemas, SDK client, API handlers, orchestrator
+  service.
+  - @database-engineer, SQL migrations, indexes, RLS, seeds, data backfills, performance.
+  - @qa-ready, unit, integration, E2E, contract tests, fixtures, CI setup.
+  - @react-engineer, UI slideout, status chips, coach picker, formatter rendering.
 
 
 **Advanced - Parallel Implementation:**
